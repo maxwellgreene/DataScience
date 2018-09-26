@@ -1,0 +1,267 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Data Science \#4 - Max Greene},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Data Science \#4 - Max Greene}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{}
+    \preauthor{}\postauthor{}
+    \date{}
+    \predate{}\postdate{}
+  
+
+\begin{document}
+\maketitle
+
+\section{Question \#1}\label{question-1}
+
+1(a): A function can be passed arguments as inputs and perform
+computations on them. 1(b): Sys.Date returns a ``Date'' object
+corrosponding to the ``system's idea'' of the date, according to the R
+documentation. 1(c): 1. Everything that exists is an object. 2.
+Everything that happens is a function call. 1(d): The source code for
+any function can be seen by entering the function name into the console
+without ant parentheses or arguments. 1(e): Default arguments can be
+useful to save time and reduce function complexity while allowing for
+function versatility. Specifically, they'er useful when you think the
+user will enter the same value into the function most of the time. 1(f):
+The \emph{args} function returns the arguments that the functions
+accepts. For example, \texttt{args(mean)} returns
+\texttt{function\ (x,...)} 1(g): Passing functions as arguments
+increases the versatility of the function. For example,
+\texttt{evaluate()} in swirl became a function capable of many
+computations from modulus operations to means to rounding. 1(h):
+\texttt{my\_vector{[}length(my\_vector){]}} -OR-
+\texttt{tail(my\_vector,1)} 1(i): \texttt{paste()} combines all string
+arguments into a single string, seperated by the \texttt{sep\ =\ "\ "}
+argument. 1(j): the ``dot-dot-dot'' argument in R allows for an infinite
+amount of arguments, which can be unpacked based on their assignment.
+
+\section{Question \#2}\label{question-2}
+
+\begin{verbatim}
+ my_mean_func <- function(x)
+ {
+    return(mean(x))
+ }
+\end{verbatim}
+
+\section{Question \#3}\label{question-3}
+
+\begin{verbatim}
+my_remain_func <- function(num, divisor)
+{
+  return(num %% divisor)
+}
+\end{verbatim}
+
+\section{Question \#4}\label{question-4}
+
+4(a): \emph{Scoring functions} are a form of data manipulation that
+reduces multidimensional data into a single numerical value. 4(b):
+According to 4.2, \emph{Scores} are functions that extract the features
+of each entity and map them to a single numerical value. 4(c): An
+effective scoring system should be easily computable, easily
+understandable, intuitive (monotonic variable interpretation), produce
+accurate results on outliers and utilize a normal distribution. 4(d): A
+ranking is a certain type of score meant to list objects in order of the
+score. For example, sports team rankings, University rankings, student
+rankings on GPA, and Google PageRank are all ranking scores. 4(e): 4(f):
+Z-scores are functions applied to a set of data in order to normalize
+it. In a data set with non-zero mean and standard deviation, a Z-score
+normalizes the mean to 0 and the standard deviation to 1, maintaining
+the relative differences between object values.
+
+\section{Question \#5}\label{question-5}
+
+5(a):
+
+\begin{verbatim}
+my_OBP <- function(hits,walks,atBats)
+{
+  return((hits+walks)/atBats)
+}
+\end{verbatim}
+
+5(b):
+
+\begin{verbatim}
+H <- sample(162:16200,270,replace=TRUE)
+W <- sample(162:1782,270,replace=TRUE)
+AB <- sample(64800:105300,270,replace=TRUE)
+
+OBP <- my_OBP(H,W,AB)
+\end{verbatim}
+
+The \texttt{sample()} function takes a specified number of items of a
+given vector, creating a somewhat random sampling of data from an evenly
+distributed vector.
+
+5(c):
+
+\begin{verbatim}
+mean(OBP)
+\end{verbatim}
+
+\section{Question \#6}\label{question-6}
+
+My function \texttt{my\_VO2\_max} is used to determine the maximum
+oxygen uptake of an individual. Here, I use it to estimate an average of
+the population. The average female VO2 max tends to range from 27-30
+mL/kg/min and the average male ranges from 35-40 mL/kg/min. It is
+assumed that larger individuals will need to intake more oxygen to
+support more cells, so by dividing my mass of the individual, we
+normalize for mass and create an efficiency metric. VO2 max is used by
+endurance athletes to determine the efficiency of their oxygen uptake.
+
+\begin{verbatim}
+my_VO2_max <- function(mLO2,duration,mass)
+{
+  return((mLO2/duration)/mass)
+}
+
+mLO2 <- sample(c(5000:100000),500,replace=TRUE)
+duration <- sample(c(5:60),500,replace=TRUE)
+mass <- sample(c(50:120),500,replace=TRUE)
+
+avg_VO2_max <- mean(my_VO2_max(mLO2,duration,mass))
+\end{verbatim}
+
+This is a good scoring function because it is accurate and a real world
+equation. If the data collected is accurate, this function will return
+the amount of oxygen used in a certain amount of time, normalized by the
+weight of the individual.
+
+\section{Question \#7}\label{question-7}
+
+\begin{verbatim}
+library(nycflights13)
+
+arr_delay_2h <- filter(flights, arr_delay > 120)
+
+to_Houston <- filter(flights, dest == "IAH" | dest == "HOU")
+
+United_American_Delta <- filter(flights, carrier == "UA" | carrier == "AA" | carrier == "DL" )
+
+Summer <- filter(flights, month == 7 | month == 8 | month == 9)
+
+arrived_late <- filter(flights, arr_delay > 120 & dep_delay < 1)
+
+delayed_but_quick <- filter(flights, dep_delay > 60 & arr_delay < dep_delay-30)
+
+early_morning <- filter(flights , dep_time >= 0000 & dep_time <= 0600)
+\end{verbatim}
+
+\section{Question \#8}\label{question-8}
+
+\texttt{dplyr::between} is a shortcut for checking if a value is between
+two numerical values. For example, if you are checking for flights from
+midnight to 6:00am, you could have \texttt{between(dep\_time,0000,0600)}
+instead of
+\texttt{dep\_time\ \textgreater{}=\ 0000\ \&\ dep\_time\ \textless{}=\ 0600}.
+
+\section{Question \#9}\label{question-9}
+
+\begin{verbatim}
+filter(flights, is.na(dep_time))
+\end{verbatim}
+
+There are 8,255 objects missing \texttt{dep\_time}. these objects are
+also missing \texttt{dep\_delay}, \texttt{arr\_time},
+\texttt{arr\_delay}, \texttt{air\_time}, and the rest of the data
+collected from the flight actually taking place. All data scheduling the
+flights are here. This may mean the fligths were scheduled bu cancelled,
+possibly to inclement weather.
+
+\section{Question \#10}\label{question-10}
+
+\begin{verbatim}
+arrange(flights, desc(is.na(dep_time)))
+\end{verbatim}
+
+\section{Question \#11}\label{question-11}
+
+\begin{verbatim}
+arrange(flights, desc(dep_delay))
+\end{verbatim}
+
+\section{Question \#12}\label{question-12}
+
+\begin{verbatim}
+arrange(flights, air_time)
+\end{verbatim}
+
+
+\end{document}

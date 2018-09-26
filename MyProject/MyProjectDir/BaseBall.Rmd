@@ -1,0 +1,80 @@
+---
+title: "R Notebook on BaseBall Salaries"
+output: html_notebook
+---
+
+# Introduction
+Dis nitebook for dem BaseBall Salaries
+
+## Introduction Subsection
+Dis subsection for dem section subsections
+
+```{r}
+library(tidyverse);
+library(reshape2);
+```
+
+Now I will load the data.
+```{r}
+salary_data <- read.csv("Data/Salaries.csv")
+```
+
+Get the size fo the dataframe.
+```{r}
+dim(salary_data)
+```
+
+Here are the first few rows.
+```{r}
+head(salary_data)
+```
+
+Here are the last few rows.
+```{r}
+tail(salary_data)
+```
+
+Obtain the names of the columns.
+```{r}
+names(salary_data)
+```
+
+Obtain summary of stats.
+```{r}
+summary(salary_data)
+```
+
+Make a bar plot indicating the various teams.
+```{r}
+salary_data %>% ggplot() + geom_bar(mapping = aes(x = teamID))+ coord_flip()
+```
+
+
+# Examine Salary by Year
+Consider average player salary by year
+```{r}
+avgSalByYear <- summarise(group_by(salary_data,yearID),mean_sal = mean(salary))
+avgSalByYear
+ggplot(avgSalByYear) + geom_line(mapping = aes(x = yearID,y = mean_sal))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
