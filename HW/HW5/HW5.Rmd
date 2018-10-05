@@ -1,6 +1,9 @@
 ---
-title: "Data Science HW #5 - Max Greene"
-output: html_notebook
+title: 'Data Science HW #5 - Max Greene'
+output:
+  word_document: default
+  pdf_document: default
+  html_notebook: default
 ---
 
 Load libraries:
@@ -66,9 +69,24 @@ byflight <- group_by(flights_df,flight)
 byflight$year <- byflight$month <- byflight$day <- byflight$carrier <- byflight$tailnum <- byflight$origin <- byflight$dest <- byflight$air_time <- byflight$distance <- byflight$hour <- byflight$minute <- byflight$time_hour <- byflight$dep_time <- sched_dep_time <- NULL
 ```
 
+#Question #5
+##Problem Description and Objectives
+###Background
+Cryptocurrency is a digital form of currency that has become increasingly popular in the past few years. Market prices are determined by trade values between individuals, which can vary with quite high volatility as supply and demand change. Data had become available on trade history and market prices over the past few years. The transparancy of the market value and trade prices make the price changes somewhat predictable over time. That said, it is possible to build a predictive model, trained on this historic data and the market listings, that can accurately predict future price changes.
 
+###Problem Description
+Due to the emotional nature of trading any assets, such as stocks, FOREX, etc. it can be decievingly difficult to make a profit off of initial investments. I believe it is possible to avoid this problem by constructing a predictive model based solely on historic market prices and market listings.
 
+###Objectives
+To build a predictive model of cryptocurrency prices using the `crypto` R package that provides historic and live cryptocurrency prices for a wide variety of coins.
 
+##Data Description
+The data provided by the `crypto` package is 24h trade volumes, open, close, high and low values for the specified market since 2010.
+
+#Question #6
+My final project folder can be found on my
+[GitHub Page](https://github.com/maxwellgreene/DataScience/tree/master/FinalProj_ETH)
+I do not have a data sub-folder because the `crypto` package obtains the live and historical data straight from the web.
 
 
 
