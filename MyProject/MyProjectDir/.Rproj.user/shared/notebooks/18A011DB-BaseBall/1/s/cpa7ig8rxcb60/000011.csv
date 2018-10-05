@@ -1,0 +1,1 @@
+"0","ggplot(avgSalByYear) + geom_line(mapping = aes(x = yearID,y = mean_sal))"

@@ -1,0 +1,145 @@
+---
+title: "Exlporatory Data Analysis"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+# Introduction
+
+This notebook follows [R for Data Science](http://r4ds.had.co.nz/exploratory-data-analysis.html) to cover the topic of exploratry data analysis (EDA). To quote from the txt:
+
+> EDA is not a formal process with a strict set of rules. More than anything, EDA  is a state of mind. During the initial phases of EDA you should feel free to investigate every idea that occurs to you. Some of these ideas will pan out, and some will be dead ends. 
+
+The goal of an exploratory data analysis is to gain understanding of your data. There are no hard a fast rules for conducting an EDA but two types of questions will always be useful for making discoveries within your data. You can loosely word these questions as:
+
+1. What type of variation occurs within my variables?
+
+2. What type of covariation occurs between my variables?
+
+The rest of this notebook goes through some typical steps of EDA and demostrates certain useful techniques and commands that are helpful in carrying out an EDA. 
+
+# Distributions of Variables
+
+We begin by importing some useful R packages. Make sure that you have all of 
+them installed before loading them. (Including the results="hide" and warning=FALSE suppresses the output and warnings usually produced by the commands.)
+```{r, results="hide", warning=FALSE}
+library(tidyverse)
+library(fastR2)
+```
+
+The **distribution** of a variable in a dataset is the set of possible values that the variable takes on, together with the frequency with which each value occurs for that variable. Visualizing the distribution of a variable is an extremely useful thing to do. The way that a distribution is visualized depends largely on whether the variable is categorical or continuous. If the variable is categorical, a barplot can be used to visualize its distribution. On the other hand, if the variable if continuous a histogram is appropriate but there are also other types of plots that are useful as well. 
+
+
+Recall that a variable is categorical if it can only take one of a small set of values. In R, categorical variables are usually saved as factors or character vectors. Here is an example of visualizing the distribution of a categorical variable using a bar chart:
+```{r}
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x = cut))
+```
+
+As another example we can apply this to the baseball salaries dataset. 
+```{r,results="hide",warning=FALSE}
+url <- "https://raw.githubusercontent.com/jmgraham30/UoSDataSci/master/code/baseballSalaries/Data/Salaries.csv"
+bbs_df <- read.csv(url)
+```
+Recall the contents of the baseball salary data. 
+
+```{r}
+head(bbs_df)
+```
+
+For example, we can look at the distribution of the lgID variable which classifies the league (American of National) for each team. 
+
+```{r}
+ggplot(data = bbs_df) +
+  geom_bar(mapping = aes(x = lgID))
+```
+
+
+The height of the bars displays how many observations occurred with each x value. You can compute these values manually with dplyr::count(). Fo example, applying this to the cut variable in the diamonds data set:
+```{r}
+diamonds %>% 
+  count(cut)
+```
+
+Notice that this is equivalent to
+```{r}
+diamonds %>% group_by(cut) %>% summarise(n=n())
+```
+
+A benefit to using the count function is that it is easier to handle multiple variables, e.g.
+```{r}
+diamonds %>% count(cut,color)
+```
+
+To examine the distribution of a continuous variable, use a histogram:
+```{r}
+ggplot(data = diamonds) +
+  geom_histogram(mapping = aes(x = carat), binwidth = 0.5)
+```
+
+
+You can compute this by hand by combining dplyr::count() and ggplot2::cut_width():
+```{r}
+diamonds %>% 
+  count(cut_width(carat, 0.5))
+```
+Note that you have to know the value for the cut width in order to do this. 
+
+
+Sometimes it can be somewhat difficult to get a nice histogram, for example in the baseball salaries data this is the case due to extreme outliers at both ends.
+```{r}
+bbs_df %>% ggplot() + geom_histogram(mapping = aes(x=salary))
+```
+Even if we change the binwidths its difficult to get an accurate representation of the variation in the salaries. Perhaps we should really have bins of unequal length. 
+
+Consider for example the following binning and count for the baseball salaries:
+```{r}
+bbs_df %>% count(cut(salary,c(-1,10000,50000,100000,500000,1000000,5000000,10000000,500000000,100000000) ))
+```
+Which can be plotted as
+```{r}
+salary_bin <- bbs_df %>% 
+  count(cut(salary,c(-1,10000,50000,100000,500000,1000000,5000000,10000000,500000000,100000000) ))
+names(salary_bin) <- c("bin_interval","count_value")
+salary_bin %>% ggplot() + geom_bar(mapping = aes(x=bin_interval,y=count_value),stat="identity") + 
+  coord_flip()
+```
+Notice how we transformed a continuous variable into a categorical one. 
+
+
+Another option is to plot a histogram of the salaries using a log scale. 
+```{r}
+bbs_df %>% ggplot() + geom_histogram(mapping = aes(x=log10(salary)))
+```
+
+
+What has happened? Some have been removed, perhaps we should do this in advance. Also, it's a good idea to play with the number of bins. 
+```{r}
+bbs_df %>% filter(salary > 0) %>% ggplot() + geom_histogram(mapping = aes(x=log10(salary)),bins=100)
+```
+
+
+One may want to see histograms seperated by values for a categorical variable. One of the better ways to do this is to use geom_freqpoly() instead of geom_histogram(). For example, 
+```{r}
+ggplot(data = diamonds, mapping = aes(x = carat, colour = cut)) +
+  geom_freqpoly(binwidth = 0.1)
+```
+
+Another example of this could be,
+```{r}
+bbs_df %>% filter(salary > 0) %>% ggplot(mapping = aes(x = log(salary), colour = teamID)) +
+  geom_freqpoly(binwidth = 0.1)
+```
+This is probably too many so we can break it up first into league and then team. 
+```{r}
+bbs_df %>% filter(salary > 0, lgID == "AL") %>% ggplot(mapping = aes(x = log(salary), colour = teamID)) +
+  geom_freqpoly(binwidth = 0.1)
+```
+
+```{r}
+bbs_df %>% filter(salary > 0, lgID == "NL") %>% ggplot(mapping = aes(x = log(salary), colour = teamID)) +
+  geom_freqpoly(binwidth = 0.1)
+```
+
+Often, a variable either follows or can be approximated by a known theoretical distribution. We will pick up here next time and then go on to consider missing values and covariation. 

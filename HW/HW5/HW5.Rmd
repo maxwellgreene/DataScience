@@ -1,0 +1,79 @@
+---
+title: "Data Science HW #5 - Max Greene"
+output: html_notebook
+---
+
+Load libraries:
+```{r}
+library(tidyverse)
+library(dplyr)
+library(nycflights13)
+```
+
+Import data from "salaries.csv".
+```{r}
+if(isTRUE(file.exists("Salaries.csv"))){
+salaries <- read.csv("Salaries.csv")
+}else{
+salaries <- read.csv("https://raw.githubusercontent.com/jmgraham30/UoSDataSci/master/code/baseballSalaries/Data/Salaries.csv")}
+```
+
+#Question #1
+Create a data.frame `hp_df` from `salaries` consisting of the highest paid players from each team for each year.
+
+```{r}
+hp_df <- top_n(group_by(salaries,teamID,yearID),1)
+```
+
+#Question #2
+```{r}
+flights_df <- mutate(flights,
+  true_dt = floor(dep_time/100)*60 + dep_time%%100,
+  true_sch_dt = floor(sched_dep_time/100)*60 + sched_dep_time%%100)
+```
+
+#Question #3
+R offers regular trig functions, `sin()`,`cos()`,`tan()`, as well as hyperbolic trig functions, `sinh()`, `cosh()`,`tanh()`.
+```{r}
+x <- seq((-2*pi),(2*pi),by = pi/20)
+sinx <- sin(x);   cosx <- cos(x);   tanx <- tan(x)
+sinhx <- sinh(x); coshx <- cosh(x); tanhx <- tanh(x)
+
+ggplot(data = data.frame(sinx,cosx,tanx,sinhx,coshx,tanhx)) + 
+  geom_line(mapping = aes(x = x, y = sinx)) + 
+  geom_line(mapping = aes(x = x, y = cosx)) +
+  geom_line(mapping = aes(x = x, y = tanx)) + 
+  geom_line(mapping = aes(x = x, y = sinhx)) +
+  geom_line(mapping = aes(x = x, y = coshx)) +
+  geom_line(mapping = aes(x = x, y = tanhx)) +
+  scale_y_continuous(limits = seq(-2.5,2.5,5))
+
+```
+
+#Question #4
+5 different ways to assess the typical delay characteristics of a group of flights.
+
+1) A `geom_freqpoly` can be used to visualize the `dep_delay` column for each group of flights, possibly fit into a normal curve or distribution.
+2) The percent of flights delayed more than a certain time amount. (e.g. what percent of flights are delayed by more than 15 minutes?)
+3) The amount of time at which a certain percent of flights are delayed by more than. (e.g. by how many minutes are 50% of flights delayed on average? somewhat like a S.D.)
+4) The percent of flights not delayed at all.
+5) Simply the average flight delay.
+
+In reality, the arrival delay is more important to the passenger. Some flights make up time on their flight, relative to the scheduled time of arrival, so the departure delay is not necessarily how late the flight will be.
+
+```{r}
+byflight <- group_by(flights_df,flight)
+byflight$year <- byflight$month <- byflight$day <- byflight$carrier <- byflight$tailnum <- byflight$origin <- byflight$dest <- byflight$air_time <- byflight$distance <- byflight$hour <- byflight$minute <- byflight$time_hour <- byflight$dep_time <- sched_dep_time <- NULL
+```
+
+
+
+
+
+
+
+
+
+
+
+

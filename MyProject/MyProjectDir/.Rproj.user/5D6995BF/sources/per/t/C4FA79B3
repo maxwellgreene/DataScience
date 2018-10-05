@@ -1,0 +1,24 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1537894810688.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "429236108",
+    "id" : "C4FA79B3",
+    "lastKnownWriteTime" : 1537972966,
+    "last_content_update" : 1537972966313,
+    "path" : "~/GitHub/DataScience/HW/HW4.Rmd",
+    "project_path" : null,
+    "properties" : {
+        "chunk_output_type" : "inline",
+        "cursorPosition" : "139,3",
+        "scrollLine" : "124",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
