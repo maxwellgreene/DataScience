@@ -1,2 +1,0 @@
-"0","avgSalByYear <- summarise(group_by(salary_data,yearID),mean_sal = mean(salary))"
-"0","avgSalByYear"

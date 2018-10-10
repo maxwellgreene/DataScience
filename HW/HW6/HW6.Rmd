@@ -1,0 +1,281 @@
+---
+title: "HW 6 Notebook on Statistical Analysis"
+output:
+  html_document:
+    df_print: paged
+---
+
+# Introduction 
+
+This notebook is meant to accompany an assigned reading from Chapter 5: Statistical Analysis of [The Data Science Design Manual](http://www.data-manual.com/). Recall that you can download the text as a pdf file from the University library. 
+
+Each section of the notebook assumes that the user has already read the corresponding section of the chapter from the book.   
+
+Load the necessary packages:
+```{r,message=FALSE,warning=FALSE}
+library(tidyverse)
+library(ggformula) # make sure package is installed
+```
+
+# Statistical Distributions
+
+**Instructions** Read section 5.1 on statistical distrubtions, run the code below, and answer the exercise questions.  
+
+**Exercise 1** What are the two "nice properties" of the classical statistical distributions?
+
+**Exercise 2** True or false: All real-world data will precisely fit some known theoretical distribution. Explain your answer. 
+
+
+Familiarity with the classical distributions is important, and R can be very helpful in developing some intuition for them. Consider the documentation obtained by calling help for the dnorm() function:
+```{r}
+?dnorm
+```
+
+**Exercise 3**  What does the dnorm() do? What are the function's inputs? 
+
+Notice that the density function for each of the classical distributions can be accessed similarly. For example, examine the documentation from
+```{r}
+?dpois
+```
+
+**Exercise 4** What is the dpois() function? 
+
+The most common classical distributions are:
+
+1. Normal (continuous) has two parameters mean and standard deviation
+2. Binomial (discrete) has two parameters
+3. Poisson (discrete) has one parameter 
+4. Geometric (discrete) has one parameter
+5. Negative binomial (discrete) has two parameters
+6. Uniform (continuous) has two parameters
+7. Exponential (continuous) has one parameter
+8. Gamma (continuous) has two parameters
+9. Chi-squared (continuous) has one parameter
+
+The binomial, normal, and Poisson distributions are described in the chapter, as is the "power law" distribution.   
+
+R has four functions related to each of the classical distributions:
+
+* density (or probability mass) function denoted dabbreviation e.g. dnorm for normal density
+* distribution function denoted pabbreviation e.g. pnorm for normal distribution
+* quantile function denoted qabbreviation e.g. qnorm for normal quantile
+* random sample function denoted rabbreviation e.g. rnorm for normal sampling
+
+Recall that the fundamental property of a density function $f(x)$ is that
+
+$\int_{-\infty}^{\infty} f(x) dx = 1$ (in the continuous case)
+
+$\sum_{x}p(x) = 1$ (in the discrete case)
+
+Moreover, the area under the curve of the density function corresponds to a probability.  
+
+See the documentation produced by the following command for more info on distributions in R:
+```{r}
+?distributions
+```
+
+The ggformula package (which you should install) has a very simple function gf_dist() for visualizing these distribution related functions. For example, 
+```{r}
+gf_dist("norm",params = list(mean=2,sd=0.3))
+```
+plots the normal distribution density function with mean=2 and standard deviation=0.3. 
+
+To plot the binomial distribution density function (actually the probability mass function) with probability=0.4 and size=10 do:
+```{r}
+gf_dist("binom",params=list(prob=0.4,size=10))
+```
+If instead we want the density histogram corresponding to the binomial distribution, use,
+```{r}
+gf_dist("binom", params=list(size=10,prob=0.4),kind="histogram",binwidth=1)
+```
+
+**Exercise 5** Use the gf_dist() function to plot the density (or probability mass) function for the Normal, Poisson, and Binomial distributions for various values of eaches parameters. 
+
+
+Note that your observed data does not necessarily arise from a particular
+theoretical distribution just because its shape is similar. Statistical tests (i.e. hypothesis tests) can be used to rigorously prove whether your experimentally-observed data reflects samples drawn from a particular distribution.
+
+
+**Exercise 6** Write an R function that implements the function 
+
+$f(x) = \left\{\begin{array}{ll} \frac{x^2}{9} & \text{if $0 \leq x \leq 3$} \\ 0 & \text{otherwise}  \end{array} \right.$
+
+Use your function to plot $f(x)$ over the interval $[-2,5]$. Is this function a density function? 
+
+# Sampling from Distributions
+
+**Instructions** Read section 5.2 on sampling from distrubtions, run the code below, and answer the exercise questions.  
+
+**Exercise 7** Why would you want to sample from a given probability distribution? 
+
+
+The cumulative distribution function (cdf) for a probability distribution with density (or probability mass) function is denoted by $F(x)$ and defined by
+
+$F(x) = \int_{-\infty}^{x} f(x) dx$ in the continuous case
+
+$F(x) = \sum_{y \leq x} f(y)$ in the discrete case
+
+In R, the cdf for a classical distribution can easily by plotted using the gf_dist() function. For example, the cdf of the normal distribution with mean = 10 and sd = 0.2 is obtained with
+```{r}
+gf_dist(dist="norm",params=list(mean=10,sd=0.2),kind="cdf")
+```
+
+**Exercise 8** Plot the cdf for the binomial distribution with prob=0.4 and size=10. What is the most striking difference between the cdf for the binomial distribution and the cdf fo the normal distribution. 
+
+Note: For a continuous distribution the following relationship between the cdf and the density function holds:
+
+$F'(x) = f(x)$. 
+
+Why is this true? 
+
+Recal that one can sample from a distribution using an R function of the form rabbreviation. For example, a random sample of 27 value from a binomial distribution with size=1 and prob=0.5 is obtained with the code
+```{r}
+rbinom(27,size=1,prob=0.5)
+```
+
+Notice that each time you run this code you obtain a different sequence of 0's and 1's. Also, sampling from the binomial distribution with size=1 and prob=0.5 is the same as simulating a fixed number of flips of a two-sided fair coin.  
+
+**Exercise 9** Interpret the results after running the following code five times. 
+```{r}
+ggplot(data=NULL,mapping = aes(x=rbinom(50,1,0.5))) + geom_bar()
+```
+
+
+
+# Statistical Significance
+
+**Instructions** Read section 5.3 on statistical significance, run the code below, and answer the exercise questions.
+
+**Exercise 10** Briefly describe statistical significance. 
+
+Note that statistical significance **does not** measure the importance or magnitude of a difference between two (or more) given distributions. 
+
+**Exercise 11** What is *effect size*? List and descibe several statistics which try to measure the effect size. 
+
+Suppose that you flip a **fair** coin 32 times. The probability that the coin comes up heads 12 times can be computed in R as follows:
+```{r}
+dbinom(12,size=32,prob=0.5)
+```
+
+**Exercise 12** Examine the plot and explain its relation to the previous calculation for the probability of 12 heads out of 32 flips of a fair coin. 
+```{r}
+gf_dist(dist="binom",params=list(size=32,prob=0.5))
+```
+Specfically, out of 32 flips, how many heads are most likely? 
+
+Given a coin, how can we decide if it is likely to be a **fair** coin or not? The usual approach is to do an experiment, collect data, and analyze the data to determine if there is sufficient evidence to support a conclusion that the coin is fair or not. Note that there are exactly two mutually exclusive outcomes, 
+
+1. the coin is fair (prob = 0.5), or 
+2. the coin is not fair (prob $\neq$ 0.5)
+
+Option 1. is often called the null hypothesis in which case option 2. is referred to as the alternative hypothesis. 
+
+Suppose that we do 100 coin flips and obtain 40 heads. The following command evaluates the degree of evidence that this data provides:
+```{r}
+binom.test(40,100,0.5,alternative = "two.sided")
+```
+There is a lot to interpret from this output. The main result to look at is the p-value = 0.05689. This value helps us to decide if we have strong enough evidence to reject the null hypothesis. Drawing a conclusion from a p-value is a bit of a judgement call and p-values will be discussed more in the next section. In this example, the p-value is not considered sufficiently small thus out data do not provide sufficient evidence to reject the null hypothesis that the coin is fair (i.e. prob=0.5). The main thing to take away is the logical order that we have followed:
+
+1. State the null and alternative hypotheses.
+
+2. Perform a statistical test (easily done with R). 
+
+3. Compute the p-value (easily done with R) 
+
+4. Draw a conclusion.  
+
+Specifically, a t-test will follow this same type of logic. 
+
+**Exercise 13** What does the t-test attempt to evaluate? 
+
+Suppose we have the following data:
+```{r}
+df <- data.frame(x=rnorm(53,190,5),y=rnorm(53,160,8))
+```
+
+
+To perform a t-test to compare the means of the two variables which you can think of a a sample of weights for men (x) and a sample of weights for women (y) we use the following code:
+```{r}
+t.test(df$x,df$y)
+```
+
+
+**Exercise 14** State the null and alternatice hypoteses. If you had to guess, would you say the data provides sufficient evidence to reject the null hypothesis? Why or why not? 
+
+
+**Exercise 15** Why does the t-test (in general not just in the specific example) work (assuming the necessary assumptions are valid)? 
+
+
+# Permutation Tests and P-values 
+
+**Instructions** Read section 5.5 on permutation tests and p-values, run the code below, and answer the exercise questions.
+
+It is very important to note that many statisitcal tests have subtleties like issues of one- vs two-sided tests, distributional assumptions, and more. Performing these tests correctly requires care and training. 
+
+An increasingly common statistical tool for constructing sampling distributions is the permutation test (or sometimes called a randomization test). The key idea to permutation testing is
+
+> If the null hypothesis is true, (*i.e.*, there is no association between two columns of data) then if we shuffle the values in one column, we will be sampling from the same distribution.  
+
+**Exercise 16** What is the main reason to use a permutation test? 
+
+Permutation tests are particularly relevant in experimental studies, where we are often interested in the sharp null hypothesis of no difference between treatment groups. In these situations, the permutation test perfectly represents our process of inference because our null hypothesis is that the two treatment groups do not differ on the outcome (i.e., that the outcome is observed independently of treatment assignment). When we permute the outcome values during the test, we therefore see all of the possible alternative treatment assignments we could have had and where the mean-difference in our observed data falls relative to all of the differences we could have seen if the outcome was independent of treatment assignment.
+
+We will now look at an example permutation test. This follows this [website](https://thomasleeper.com/Rcourse/Tutorials/permutationtests.html).
+
+Consider the data generated by
+```{r}
+set.seed(1)
+n <- 100
+tr <- rbinom(n, 1, 0.5)
+y <- 1 + tr + rnorm(n, 0, 3)
+```
+
+**Exercise 17** Compute the values of the mean for tr and y respectivley.  
+
+
+We can examine the difference in the mean between tr and y easily as follows:
+```{r}
+dm <- diff(by(y, tr, mean))
+as.numeric(dm)
+```
+
+To obtain a single permutation of the data, we simply resample without replacement and calculate the difference again:
+```{r}
+s <- sample(tr, length(tr), FALSE)
+diff(by(y, s, mean))
+```
+
+Here we use the permuted treatment vector s instead of tr to calculate the difference and find a very small difference. If we repeat this process a large number of times, we can build our approximate permutation distribution (i.e., the sampling distribution for the mean-difference). We'll use replicate do repeat our permutation process. The result will be a vector of the differences from each permutation (i.e., our distribution):
+```{r}
+dist <- replicate(2000, diff(by(y, sample(tr, length(tr), FALSE), mean)))
+```
+
+We can look at our distribution using hist and draw a vertical line for our observed difference:
+```{r}
+ggplot(mapping = aes(x=dist)) + geom_histogram(binwidth = 0.05) + 
+  geom_vline(xintercept=as.numeric(dm),color="blue",lwd=1)
+```
+
+
+At face value, it seems that our null hypothesis can probably be rejected. Our observed mean-difference appears to be quite extreme in terms of the distribution of possible mean-differences observable were the outcome independent of treatment assignment. But we can use the distribution to obtain a p-value for our mean-difference by counting how many permuted mean-differences are larger than the one we observed in our actual data. We can then divide this by the number of items in our permutation distribution (i.e., 2000 from our call to replicate, above):
+
+```{r}
+sum(dist > diff(by(y, tr, mean)))/2000  # one-tailed test
+```
+or
+```{r}
+sum(abs(dist) > abs(diff(by(y, tr, mean))))/2000  # two-tailed test
+```
+
+Using either the one-tailed test or the two-tailed test, our difference is unlikely to be due to chance variation observable in a world where the outcome is independent of treatment assignment.
+
+We don't always need to build our own permutation distributions (though it is good to know how to do it). R provides a package to conduct permutation tests called coin. We can compare our p-value (and associated inference) from above with the result from coin:
+```{r,warning=FALSE}
+library(coin)
+independence_test(y ~ tr, alternative = "greater")  # one-tailed
+```
+
+or
+```{r}
+independence_test(y ~ tr)  # two-tailed
+```
