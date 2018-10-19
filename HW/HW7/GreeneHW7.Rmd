@@ -1,0 +1,94 @@
+---
+title: "Max Greene HW7"
+output: html_notebook
+---
+
+#Question #1
+##(a)
+A model is a tool used to explain, predict and forecast information in the future. 
+A predictive model is specifically used to predict the value of some variable, probabalistically or concretely, as a result of previous data observations.
+
+##(b)
+Sometimes the simplest model gives the best predictions, because it does not overfit to the data, and can be more robust to variation in data.
+
+##(c)
+**Bias** is the tendency for the accuracy of a model to suffer because of limited or innaccurate assumptions about the ideal structure of the model in it's creation. For example, if a less-than-accurate approach is used, which is unable to adapt into the ideal approach. In other words, *underfitting* data.
+
+**Variance** is the tendency for the accuracy of a model in the general case to suffer as a result of using a model that is too specific to the gathered data which may have errors. If the gathered data is in any way a misrepresentation of the ideal data, which it often is in science, it is succeptible to *overfitting* from a model that is too complex.
+
+##(d)
+Bayes' theorem gives the probability of a predictive model being correct in a particular instance, given the probability that the event occurs naturally and the probability that the model gives the correct answer in any instance. This reasoning can be used to assess the validity of using a predictive model vs. generating a random answer, which can be surprisingly similar if the model is not often accurate or gives the ideal answer frequently.
+
+##(e)
+###Linear vs. Non-linear
+A linear model uses optimization of linear coefficients to identify the relationship between variables, while a non-linear model uses non-linear functions.
+
+###Blackbox vs. Descriptive
+
+Blackbox models provide an answer and a relationship, but no are very difficult to understand intuitively. For example, a neural network with 3e6 linear coefficients and weights. Descriptive models are intuitive to understand and shed light on the conceptual relationship between two variables. Descriptive models are often theory-driven as well.
+
+### First-Principle vs. Data-driven
+
+First-principle models are based off of a creator understanding of how the model should best behave. That is, the writer may apply a greater weight to one variable if it *should* haave that relationship in the real world. For example, if the real estate market is doing well, people *should* be buying more kitchen and bath supplies.
+
+###Stochastic vs. Deterministic 
+
+Stochastic models incorporate some element of randomness to account for the randomness of data in the real world.
+
+###Flat vs. Heriarchical 
+
+Flat models are based on a single set of inputs and an output, with not much organization in between. a heriarchical model is based off of sub-modelsm or a structured organization of models between input and output. Heirarchical can generally be theory-based because of this; since theories are generated at a single level of analysis, they can only be used to construct a sub-model, which can then be used in the heirarchical structure.
+
+##(f)
+**Classification Task:** Given a set of possible categories, the data as input must be calssified into one of the categories. For example, a classification of an image of a fruit could fit into an apple, orange, pear, etc.
+
+##(g)
+Value prediction aims to predict a specific value of a feature in the future, rather than fitting the feature into a category. For example, predicting the age of a face in a picture rather than if it is male or female.
+
+##(h)
+Evaluating a model involves an investigation of the correct and incorrect answers and what they mean. That is, are the errors made by the model defensible, serious or irrelevant?
+
+##(i)
+*Accuracy* is a measure of the percent of answers that were correct, how close the model was the the absolute correct answer.
+
+##(j)
+*Precision* is a measure of how often the model is correct when it decides to declare the data positive. That is, what percent of the time is the model correct when is classifies as positive?
+
+##(k)
+**Recall** is a measure of how often the model deemed the data positive when the correct answer was positive.
+
+$recall = \frac{TP}{TP+FN}$
+
+##(l)
+
+The F score takes into account both precision and recall, requiring a large score on both to have a larger F score. This rewards a high TP, low FP, high TN and low FN.
+
+##(m)
+
+The ROC curve shows the trad-off between a true and false positive determination fro the model. ROC curves are used to fidn the best threshold to use for a classifier.
+
+##(n)
+
+Absolute error is simply the model minus observed value for each data point.
+Relative error is a normalized error function that returns a single unit-less error.
+Squared error means error will always be positive and outliers will influence the model more than close data points.
+
+##(o)
+```{r}
+x <- c(1,2,3,4,5)
+y <- c(3.4,4.1,4.2,4.7,5.3)
+f <- .5*(x)+3
+temp <- data.frame(x,y,f)
+
+ggplot(temp) + 
+  geom_point(mapping = aes(x = x,y = y)) + 
+  geom_line(mapping = aes(x = x, y = f)) + 
+
+mse <- function(f,y){return(mean((f - y)^2))}
+rmsqe <- function(f,y){return(mean(sqrt((f-y)^2)))}
+```
+
+
+
+
+

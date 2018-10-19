@@ -19,11 +19,16 @@ library(ggformula) # make sure package is installed
 
 # Statistical Distributions
 
-**Instructions** Read section 5.1 on statistical distrubtions, run the code below, and answer the exercise questions.  
+**Instructions** Read section 5.1 on statistical distrubtions, run the code below, and answer the exercise questions.
 
 **Exercise 1** What are the two "nice properties" of the classical statistical distributions?
 
-**Exercise 2** True or false: All real-world data will precisely fit some known theoretical distribution. Explain your answer. 
+(1) they describe shapes of frequency distributions that arise often in practice
+(2) they can often be described mathematically using closed-form expressions with very few parameters.
+
+**Exercise 2** True or false: All real-world data will precisely fit some known theoretical distribution. Explain your answer.
+
+False. Real world data has noise and considerable errors, which may cause it to not fit into a distribution.
 
 
 Familiarity with the classical distributions is important, and R can be very helpful in developing some intuition for them. Consider the documentation obtained by calling help for the dnorm() function:
@@ -33,12 +38,16 @@ Familiarity with the classical distributions is important, and R can be very hel
 
 **Exercise 3**  What does the dnorm() do? What are the function's inputs? 
 
+`dnorm` is the density of the normal distribution function. `dnorm()` take a vector `x` as data, a mean and SD as arguments.
+
 Notice that the density function for each of the classical distributions can be accessed similarly. For example, examine the documentation from
 ```{r}
 ?dpois
 ```
 
 **Exercise 4** What is the dpois() function? 
+
+`dpois` is the density of the normal distribution function. `dpois()` take a vector `x` as data and `lambda` as arguments.
 
 The most common classical distributions are:
 
@@ -91,6 +100,14 @@ gf_dist("binom", params=list(size=10,prob=0.4),kind="histogram",binwidth=1)
 
 **Exercise 5** Use the gf_dist() function to plot the density (or probability mass) function for the Normal, Poisson, and Binomial distributions for various values of eaches parameters. 
 
+```{r}
+gf_dist("norm", params=list(mean=0,sd=1),kind="histogram",binwidth=.1)
+
+gf_dist("pois", params=list(lambda=10),kind="histogram",binwidth=1)
+
+gf_dist("binom", params=list(size=500,prob=.5),kind="histogram",binwidth=1)
+
+```
 
 Note that your observed data does not necessarily arise from a particular
 theoretical distribution just because its shape is similar. Statistical tests (i.e. hypothesis tests) can be used to rigorously prove whether your experimentally-observed data reflects samples drawn from a particular distribution.
@@ -102,12 +119,25 @@ $f(x) = \left\{\begin{array}{ll} \frac{x^2}{9} & \text{if $0 \leq x \leq 3$} \\ 
 
 Use your function to plot $f(x)$ over the interval $[-2,5]$. Is this function a density function? 
 
+```{r}
+q6_func <- function(x)
+{
+  return(ifelse(0<=x & x<=3,(x^2)/9,0))
+}
+
+x <- seq(-5,5,.01)
+ggplot(as.data.frame(x)) + geom_point(mapping = aes(x = x,y = q6_func(x)))
+```
+No, this is not a density function.
+
+
 # Sampling from Distributions
 
 **Instructions** Read section 5.2 on sampling from distrubtions, run the code below, and answer the exercise questions.  
 
 **Exercise 7** Why would you want to sample from a given probability distribution? 
 
+So that you can simulate real data of the given ditribution, and so that you can know almost exactly the parameters of the data.
 
 The cumulative distribution function (cdf) for a probability distribution with density (or probability mass) function is denoted by $F(x)$ and defined by
 
@@ -120,7 +150,13 @@ In R, the cdf for a classical distribution can easily by plotted using the gf_di
 gf_dist(dist="norm",params=list(mean=10,sd=0.2),kind="cdf")
 ```
 
-**Exercise 8** Plot the cdf for the binomial distribution with prob=0.4 and size=10. What is the most striking difference between the cdf for the binomial distribution and the cdf fo the normal distribution. 
+**Exercise 8** Plot the cdf for the binomial distribution with prob=0.4 and size=10. What is the most striking difference between the cdf for the binomial distribution and the cdf of the normal distribution?
+
+```{r}
+gf_dist(dist="binom",params=list(prob=.4,size=10))
+```
+The center of the binomial distribution is not necessarily at the midpoint of the y-axis. This means that the binomial distribution is not symetrical, while the normal distribution is by definition.
+
 
 Note: For a continuous distribution the following relationship between the cdf and the density function holds:
 
@@ -128,18 +164,19 @@ $F'(x) = f(x)$.
 
 Why is this true? 
 
-Recal that one can sample from a distribution using an R function of the form rabbreviation. For example, a random sample of 27 value from a binomial distribution with size=1 and prob=0.5 is obtained with the code
+Recall that one can sample from a distribution using an R function of the form rabbreviation. For example, a random sample of 27 value from a binomial distribution with size=1 and prob=0.5 is obtained with the code
 ```{r}
 rbinom(27,size=1,prob=0.5)
 ```
 
-Notice that each time you run this code you obtain a different sequence of 0's and 1's. Also, sampling from the binomial distribution with size=1 and prob=0.5 is the same as simulating a fixed number of flips of a two-sided fair coin.  
+Notice that each time you run this code you obtain a different sequence of 0's and 1's. Also, sampling from the binomial distribution with size=1 and prob=0.5 is the same as simulating a fixed number of flips of a two-sided fair coin.
 
 **Exercise 9** Interpret the results after running the following code five times. 
 ```{r}
-ggplot(data=NULL,mapping = aes(x=rbinom(50,1,0.5))) + geom_bar()
+ggplot(data=NULL,mapping = aes(x=rbinom(2,1,0.5))) + geom_bar()
 ```
 
+There seems to be an even chance of the second coin flip being the same or different from the first coin flip, corresponding to the real world probability of this in a fair coin flip.
 
 
 # Statistical Significance
@@ -148,20 +185,29 @@ ggplot(data=NULL,mapping = aes(x=rbinom(50,1,0.5))) + geom_bar()
 
 **Exercise 10** Briefly describe statistical significance. 
 
+Statistical significance gives the likelihood of the tested data appearing in the real world if there were no legitimate correlation between them. Generally, if there is less than a 5% chance of the data supporting the null hypothesis, we reject it and declare a correlation between the data.
+
 Note that statistical significance **does not** measure the importance or magnitude of a difference between two (or more) given distributions. 
 
 **Exercise 11** What is *effect size*? List and descibe several statistics which try to measure the effect size. 
+
+The magnitude of difference between the means to groups with the same sd. Tests are: Cohen's d, Perason's correlation coefficient r, th coefficient of variation r^2, etc.
 
 Suppose that you flip a **fair** coin 32 times. The probability that the coin comes up heads 12 times can be computed in R as follows:
 ```{r}
 dbinom(12,size=32,prob=0.5)
 ```
 
-**Exercise 12** Examine the plot and explain its relation to the previous calculation for the probability of 12 heads out of 32 flips of a fair coin. 
+**Exercise 12** Examine the plot and explain its relation to the previous calculation for the probability of 12 heads out of 32 flips of a fair coin.
+
+The calculation of the probability of 12 heads out of 32 flips corresponds to the value of the binomial distribution at 12 on the plot.
+
 ```{r}
 gf_dist(dist="binom",params=list(size=32,prob=0.5))
 ```
 Specfically, out of 32 flips, how many heads are most likely? 
+
+16, a 50% chance at each flip.
 
 Given a coin, how can we decide if it is likely to be a **fair** coin or not? The usual approach is to do an experiment, collect data, and analyze the data to determine if there is sufficient evidence to support a conclusion that the coin is fair or not. Note that there are exactly two mutually exclusive outcomes, 
 
@@ -186,7 +232,9 @@ There is a lot to interpret from this output. The main result to look at is the 
 
 Specifically, a t-test will follow this same type of logic. 
 
-**Exercise 13** What does the t-test attempt to evaluate? 
+**Exercise 13** What does the t-test attempt to evaluate?
+
+A t-test attempts to evaluate the chances of obtaining the determined results if the null hypothesis were to be true. That is, if the tested variables were to have no relationship in the real world, waht are the chances of obtaining the collected results? If the p-value is greater than some given threshold, it is fair to conclude that there is a correlation between these two varibles.
 
 Suppose we have the following data:
 ```{r}
@@ -199,11 +247,13 @@ To perform a t-test to compare the means of the two variables which you can thin
 t.test(df$x,df$y)
 ```
 
+**Exercise 14** State the null and alternative hypotheses. If you had to guess, would you say the data provides sufficient evidence to reject the null hypothesis? Why or why not? 
 
-**Exercise 14** State the null and alternatice hypoteses. If you had to guess, would you say the data provides sufficient evidence to reject the null hypothesis? Why or why not? 
-
+Null hypothesis: there is no statistical difference between populations represented by `df$x` and `df$y`; they are the same.
+Alternate Hypothesis: there is a statistically significant differences between these two populations; they are likely from different populations.
 
 **Exercise 15** Why does the t-test (in general not just in the specific example) work (assuming the necessary assumptions are valid)? 
+
 
 
 # Permutation Tests and P-values 
@@ -232,6 +282,10 @@ y <- 1 + tr + rnorm(n, 0, 3)
 
 **Exercise 17** Compute the values of the mean for tr and y respectivley.  
 
+```{r}
+mean(tr)
+mean(y)
+```
 
 We can examine the difference in the mean between tr and y easily as follows:
 ```{r}
@@ -256,7 +310,6 @@ ggplot(mapping = aes(x=dist)) + geom_histogram(binwidth = 0.05) +
   geom_vline(xintercept=as.numeric(dm),color="blue",lwd=1)
 ```
 
-
 At face value, it seems that our null hypothesis can probably be rejected. Our observed mean-difference appears to be quite extreme in terms of the distribution of possible mean-differences observable were the outcome independent of treatment assignment. But we can use the distribution to obtain a p-value for our mean-difference by counting how many permuted mean-differences are larger than the one we observed in our actual data. We can then divide this by the number of items in our permutation distribution (i.e., 2000 from our call to replicate, above):
 
 ```{r}
@@ -279,3 +332,13 @@ or
 ```{r}
 independence_test(y ~ tr)  # two-tailed
 ```
+
+
+
+
+
+
+
+
+
+
