@@ -1,0 +1,57 @@
+---
+title: "Max Greene Data Science HW8"
+output: html_notebook
+---
+
+#Question #1
+
+##(a)
+Sample size `n` is **large**, number of predictors `p` is **small**.
+
+A more flexible, complex model should be used for this data set, because it will be difficult to overfit due to the higher `n`. Also, the absolute complexity will remain low because fo the small `p`.
+
+##(b)
+Sample size `n` is **small**, number of predictors `p` is **large**.
+
+A less flexible, simple model should be used for this data set, because it is easy to overfit. The complexity of the model should be kept low, in order to account for `p` and the limited observations to use for training.
+
+##(c)
+Relationship between predictors and responses if highly non-linear.
+
+A flexible, complex model should be used in this scenario because if the data is highly non-linear, it is unlikely that a simple, biased model will fit properly since it will not account for all possible functions.
+
+##(d)
+The variance of error terms is extremely high.
+
+A simple, inflexible model should be used in this case, in order to account for the ease of overfitting.
+
+#Question #2
+##(a)
+Regression. CEO salary is a continuous, numerical variable so a regression must be used to predict it. 
+`n` is 500, the number of firms data is collected from.
+`p` is profit, number of employees, industry and CEO salary. 
+
+##(b)
+Classification. *Success* and *failure* are categorical variables, the data must be classified. 
+`n` is 20, the number of products data is collected from.
+`p` is success/failure, price, marketting budget, competition price, ten other variables. 
+
+##(c)
+Regression. Magnitude of change in a forex trading market is a continuous, numerical variable. 
+`n` is 52, the number of weeks in 2012.
+`p` is % change in USD/EUR, % change in USD market, % change in British market and % change in German market.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

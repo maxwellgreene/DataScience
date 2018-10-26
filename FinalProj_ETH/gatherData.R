@@ -15,13 +15,6 @@ GetCoinHistory <- function(x)
   data$ranknow <- NULL
   
   coindata <<- data
-  
-  data <- dplyr::mutate(data,
-                        ma2 = rollmeanr(data$open,2,na.pad=TRUE),
-                        ma3 = rollmeanr(data$open,3,na.pad=TRUE),
-                        ma4 = rollmeanr(data$open,4,na.pad=TRUE))
-  
-  rollcoindata <<- data
 }
 
 #========== GET CURRENT ==========
@@ -40,12 +33,6 @@ GetCurrentData <- function(x)
   coindatarn <<- temp
 }
 
-#========== MOVING AVERAGE ==========
-
-mutateMovingAvg <- function(x,n=5)
-{
-  return(filter(x,rep(1/n,n),sides==1))
-}
 
 #========== TEMP STUFF ==========
 
