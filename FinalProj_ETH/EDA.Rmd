@@ -1,0 +1,56 @@
+---
+title: "Historical Ethereum Price Exploratory Data Analysis"
+output: html_notebook
+---
+
+Load necessary libraries:
+```{r}
+library(tidyverse)
+#may need to install:
+library(crypto)
+```
+
+#Import Data
+
+Import data with `crypto` package using my function `GetCoinHistory()` from the `gatherData.R` file:
+```{r}
+data <- GetCoinHistory("ETH")
+```
+
+#Organize Data
+
+Add 10 and 50 day moving average of open prices with my function `mutateRoll()` from the `mutateData.R` file:
+```{r}
+dataMA <- mutateRoll(data,data$open,c(10,50))
+```
+
+Add Yesterday's open and close price to data with my function `mutateYesterday()` from the `mutateData.R` file:
+```{r}
+dataMA <- mutateLast(dataMA,data$open,"openLast")
+dataMA <- mutateLast(dataMA,data$close,"closeLast")
+```
+
+Add Tomorrow's open price to data with my function `mutateLast()` from the `mutateData.R` file:
+```{r}
+dataMA <- mutateNext(dataMA,data$open,"openNext")
+dataMA <- mutateNext(dataMA,data$close,"closeNext")
+```
+These values, the open and close price for tomorrow's market, will serve as the training values for our model. 
+
+#Plot Data
+I have written four plotting functions in my `plotData.R` file:
+`plotOpen()`, `plotClose()`, `plotHigh()`, `plotLow()`
+
+```{r}
+plotOpen(dataMA)
+plotClose(dataMA)
+plotHigh(dataMA)
+plotLow(dataMA)
+```
+
+#Moving Forward w/ Model
+Now that the data has moving averages as well as past and previous values for open and close, it can be implemented in the form of a model. 
+Yesterday's open, yesterday's close, today's open, today's close, historically the open and close of the next day, 10-day moving averages and 50-day moving averages can now be predictors used in the model, which could have a variety of useful outputs in trading. Namely, the difference between tomorrow's open and close values would be a useful prediction for traders, because it would indicate a predicted large shift in the market. 
+
+
+

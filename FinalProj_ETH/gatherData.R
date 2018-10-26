@@ -15,6 +15,7 @@ GetCoinHistory <- function(x)
   data$ranknow <- NULL
   
   coindata <<- data
+  return(data)
 }
 
 #========== GET CURRENT ==========
