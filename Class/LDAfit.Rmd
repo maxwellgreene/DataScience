@@ -1,0 +1,66 @@
+---
+title: "Iris data notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse);
+library(dplyr);
+library(GGally);
+library(MASS);
+```
+
+
+```{r}
+head(iris)
+table(iris$Species)
+#ggpairs(iris)
+ggplot(data=iris) + geom_point(mapping = aes(x=Petal.Length,y = Petal.Width,color=Species))
+ggplot(data=iris) + geom_point(mapping = aes(x=Sepal.Length,y = Sepal.Width,color=Species))
+```
+
+```{r}
+dim(iris)
+```
+
+Test Set
+```{r}
+iris_test <- sample_n(iris,75);
+```
+
+Training Set
+```{r}
+iris_train <- sample_n(iris,115);
+```
+
+Compare sets
+```{r}
+ggplot(iris_train) + geom_point(mapping = aes(x=Petal.Length,y=Petal.Width,color=Species))
+
+ggplot(iris_test) + geom_point(mapping = aes(x=Petal.Length,y=Petal.Width,color=Species))
+```
+
+Fit an LDA model
+```{r}
+iris_lda_fit <- lda(Species ~ Petal.Length + Petal.Width, data = iris_train)
+iris_lda_fit
+```
+
+Confusion Martrix
+```{r}
+table(predict(iris_lda_fit,type="class")$class,data=iris_train$Species)
+```
+
+```{r}
+iris_train <- mutate(iris_train, prediction = predict(iris_lda_fit,type="class")$class)
+```
+
+
+
+
+
+
+
+
+
+

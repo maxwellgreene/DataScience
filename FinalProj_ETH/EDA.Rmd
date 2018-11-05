@@ -5,9 +5,10 @@ output: html_notebook
 
 Load necessary libraries:
 ```{r}
-library(tidyverse)
+library(tidyverse);
 #may need to install:
-library(crypto)
+library(crypto);
+library(zoo);
 ```
 
 #Import Data
@@ -50,7 +51,7 @@ plotLow(dataMA)
 
 #Moving Forward w/ Model
 Now that the data has moving averages as well as past and previous values for open and close, it can be implemented in the form of a model. 
-Yesterday's open, yesterday's close, today's open, today's close, historically the open and close of the next day, 10-day moving averages and 50-day moving averages can now be predictors used in the model, which could have a variety of useful outputs in trading. Namely, the difference between tomorrow's open and close values would be a useful prediction for traders, because it would indicate a predicted large shift in the market. 
+Yesterday's open, yesterday's close, today's open, today's close, historically the open and close of the next day, 10-day moving averages and 50-day moving averages can now be predictors used in the model, which could have a variety of useful outputs in trading. Namely, the difference between tomorrow's open and close values would be a useful prediction for traders, because it would indicate a predicted large shift in the market.
 
 
 

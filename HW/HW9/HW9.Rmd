@@ -1,0 +1,154 @@
+---
+title: "Max Greene Data Science HW9"
+output: html_notebook
+---
+
+#Question #1
+(Exercise 2, Chapter 3)
+KNN classifiers have a categorical output at each point, just as classification provides a model for fitting points into categories. Specifically, each point is given some sort of "majority vote," however that may be defined in a particular model, at each point from it's k nearest neighbors for which category to join.
+
+KNN regression has a numerical output at each point, just as regression provides a model for fitting a probability of a value at each point. Specifically, each point is given an average of its k nearest neighbors and assigned that numerical value.
+
+#Question #2
+(Exercise 3, Chapter 3)
+##(a)
+(iii) is correct. It states: for a fixed value of IQ and GPA, males earn more on average than females provided tat GPA is high enough.
+This is true because the coefficients involved in the gender terms, $\beta_3$ and $beta_5$, correspond to an increased
+
+##(b)
+A female with an IQ of 110 and a GPA of 4.0 is predicted to have a salary of \$137.1k = $(50+20(4)+.07(110)+35(1)+.01(4.0*110)-10(4.0*1))*1000$
+##(c)
+Not necessarily true. If the values for GPA or IQ are relatively large, the coefficient values will be smaller to account for this. The interaction effect is the value of the entire term. For example, the coefficient term for GPA alone is $\beta_1 \times X_1$, which contributes (on average, because mean IQ is 100) 1/100 of the value of $\beta_5 \times X_1 \times X_3$ with equivalent coefficients.
+
+#Question #3
+(Conceptual Exercise 5, Chapter 3)
+$a_i$ here is quivalent to $\frac{1}{x_i}$.
+
+#Question #4
+(Applied Exercise 8, Chapter 3)
+```{r}
+lmAuto <- lm(data = Auto, formula = mpg ~ horsepower)
+summary(lmAuto)
+temp <- as.vector(lmAuto$coefficients)
+ggplot(Auto) + 
+  geom_point(mapping = aes(x = horsepower, y = mpg, color = as.character(cylinders))) + 
+  geom_line(mapping = aes(x = horsepower, y = temp[1]+horsepower*temp[2]))
+```
+
+Yes, there is a (negative) relationship between the predictor, horsepower, and the response, mpg. That is, as horsepower increases, mpg tends to decrease, which significant reliability. 
+
+#Question #5
+(Applied Exercise 9, Chapter 3)
+
+```{r}
+Auto$name <- Auto$origin <- NA
+ggpairs(Auto);
+```
+
+```{r}
+cor(Auto)
+mlmAuto <- lm(data = Auto, formula = mpg ~ cylinders + displacement + horsepower + weight + acceleration + year)
+summary(mlmAuto)
+```
+
+```{r}
+temp <- as.vector(mlmAuto$coefficients)
+ggplot(Auto) + 
+  geom_point(mapping = aes(x = weight,y = mpg, color = "weight")) + 
+  geom_point(mapping = aes(x = horsepower,y = mpg, color = "horsepower")) + 
+  geom_point(mapping = aes(x = displacement,y = mpg, color = "displacement"))
+```
+
+```{r}
+mlmAuto <- lm(data = Auto, formula = mpg ~ horsepower:displacement + horsepower*displacement)
+summary(mlmAuto)
+```
+
+```{r}
+mlmAuto <- lm(data = Auto, formula = mpg ~ log10(horsepower))
+summary(mlmAuto)
+```
+Any variation of horsepower I tried (sqrt(horsepower), horsepower^2, log10(horsepower), etc.) produced a significant p-value.
+
+#Question #6
+Data that can be well-approximated by a quadratic function:
+```{r}
+x <- seq(0,10,.01)
+y <- x^(1.8)
+datadf <- data.frame(x=x,y = (y + rnorm(1001,sd = 5,mean = 0)))
+
+ggplot(datadf) + geom_point(mapping = aes(x = x,y = y))
+
+quadlm <- lm(data= datadf, formula = y ~ x + I(x^2))
+summary(quadlm)
+
+temp <- as.vector(quadlm$coefficients)
+ggplot(datadf) + 
+  geom_point(mapping = aes(x = x, y = y), alpha = .4) + 
+  geom_line(mapping = aes(x = x , y = temp[1] + temp[2]*x + temp[3]*x^(2)))
+
+```
+
+Data that should not be well-approximated by a quadratic function:
+```{r}
+x <- seq(0,10,.01)
+y <- sin(x+1) - cos(1-x)
+datadf <- data.frame(x=x,y = (y + rnorm(1001,sd = .2,mean = 0)))
+
+ggplot(datadf) + geom_point(mapping = aes(x = x,y = y))
+
+quadlm <- lm(data= datadf, formula = y ~ x + I(x^2))
+summary(quadlm)
+
+temp <- as.vector(quadlm$coefficients)
+ggplot(datadf) + 
+  geom_point(mapping = aes(x = x, y = y), alpha = .4) + 
+  geom_line(mapping = aes(x = x , y = temp[1] + temp[2]*x + temp[3]*x^(2)))
+```
+
+#Question #7
+Using my dataset:
+```{r}
+ETHdata <- crypto_history(coin = "ETH");
+  ETHdata$slug <- NULL
+  ETHdata$symbol <- NULL
+  ETHdata$name <- NULL
+  ETHdata$ranknow <- NULL
+
+nums <- c(10,50)
+column <- ETHdata$open
+for(i in 1:length(nums))
+  {
+    varname = paste("ma",i,sep="")
+    ETHdata <- dplyr::mutate(ETHdata,!!varname := rollmean(column,nums[i],na.pad=TRUE))
+}
+
+ETHdata <- mutate(ETHdata, Last = c(NA,head(column,-1)))
+
+ETHdata <- mutate(ETHdata, Next = c(column[-1],column[1]))
+
+head(ETHdata)
+```
+
+Fitting a linear model to my data:
+
+```{r}
+lmETH <- lm(data = ETHdata, formula = Next ~ Last)
+summary(lmETH)
+
+lmETH <- lm(data = ETHdata, formula = Next ~ volume:Last)
+summary(lmETH)
+```
+
+These linear models may not be entirely accurate for my data currently. I would have to alter my data to a daily change, because the variables I am currently using are overall very well correlated. 
+
+
+
+
+
+
+
+
+
+
+

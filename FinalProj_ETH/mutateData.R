@@ -20,4 +20,3 @@ mutateNext <- function(data,column,varname)
 {
   return(mutate(data, !!varname := c(column[-1],column[1])))
 }
-
