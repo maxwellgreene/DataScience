@@ -1,0 +1,155 @@
+---
+title: "Data Science HW10, Max Greene"
+output: html_notebook
+---
+#Question #1
+
+
+
+#Question #2
+
+```{r}
+library(ISLR)
+```
+
+
+```{r}
+head(Weekly)
+```
+
+##(a)
+Plots of "Today" and "Volume" with respect to time, each entry assumed to be a day, with adjacent rows being adjacent days.
+```{r}
+ggplot(Weekly,mapping = aes(x = 1:length(Weekly$Year),y=Today)) +   geom_point()
+
+ggplot(Weekly,mapping = aes(x=1:length(Weekly$Volume),y=Volume))+
+  geom_point()
+```
+
+It is apperant in this dataset that "Today" entries are fairy constant, while "Volume" entries gradually increase, followed by a sharp increase and a sharp decrease.
+```{r}
+summary(Weekly %>% dplyr::select(-Lag1,-Lag2,-Lag3,-Lag4,-Lag5))
+```
+
+##(b)
+```{r}
+weekly_df <- mutate(Weekly, dir_bin = as.integer(Direction)-1)
+head(weekly_df)
+
+ggplot(weekly_df,mapping = aes(x=1:length(weekly_df$dir_bin),y=dir_bin)) + geom_point() + stat_smooth(method = "lm")
+```
+
+```{r}
+weekly_glm <- glm(
+  dir_bin~Today:Lag1+Today,
+  family=binomial,data=weekly_df)
+summary(weekly_glm)
+```
+
+After checking many combinations of variables, Today in combination with Today:Lag1 is the best predictor of tomorrow's outcome mobing up or down.
+
+##(c)
+```{r}
+prediction <- predict(weekly_glm,type="response")
+prediction <- ifelse(prediction<=0.1,0,1)
+table(weekly_df$dir_bin,prediction)
+```
+
+This confusion matrix says the following things about the glm:
+1) 483 decreases were correctly predicted
+2) 1 decrease was incorrectly predicted as an increase
+3) 603 increases were correctly predicted
+4) 2 increases were incorrectly predicted as a decrease
+
+##(d)
+Create test and train data sets, where training sets are up until 2008 and test sets are all of 2009 and 2010.
+```{r}
+weekly_df_train <- mutate(Weekly, dir_bin = as.integer(Direction)-1)
+weekly_df_test <- dplyr::filter(weekly_df_train, Year > 2008)
+weekly_df_train <- dplyr::filter(weekly_df_train, Year < 2009)
+```
+
+```{r}
+weekly_glm <- glm(dir_bin~Lag2,family=binomial,data=weekly_df_train)
+summary(weekly_glm)
+```
+
+```{r}
+prediction <- predict(weekly_glm,weekly_df_test,type="response")
+prediction <- ifelse(prediction<=0.5,0,1)
+temp <- table(weekly_df_test$dir_bin,prediction)
+temp
+```
+
+Fraction of percentage correct:
+```{r}
+(sum(diag(temp)))/(sum(temp))*100
+```
+
+##(e)
+Create/reset test and train data sets, where training sets are up until 2008 and test sets are all of 2009 and 2010.
+```{r}
+weekly_df_train <- mutate(Weekly, dir_bin = as.integer(Direction)-1)
+weekly_df_test <- dplyr::filter(weekly_df_train, Year > 2008)
+weekly_df_train <- dplyr::filter(weekly_df_train, Year < 2009)
+```
+
+```{r}
+weekly_lda <- lda(dir_bin~Lag2,family=binomial,data=weekly_df_train)
+weekly_lda
+```
+
+```{r}
+prediction <- predict(weekly_lda,weekly_df_test,type="response")
+table(weekly_df_test$dir_bin,prediction$class)
+```
+
+
+##(f)
+Create/reset test and train data sets, where training sets are up until 2008 and test sets are all of 2009 and 2010.
+```{r}
+weekly_df_train <- mutate(Weekly, dir_bin = as.integer(Direction)-1)
+weekly_df_test <- dplyr::filter(weekly_df_train, Year > 2008)
+weekly_df_train <- dplyr::filter(weekly_df_train, Year < 2009)
+weekly_df_train <- head(weekly_df_train,length(weekly_df_test$Today))
+```
+
+```{r}
+#weekly_df_train$dir_bin
+temp1 <- as.matrix(dplyr::select(weekly_df_train,Lag2))
+temp2 <- as.matrix(dplyr::select(weekly_df_train,dir_bin))
+weekly_knn <- knn(temp1,temp1,temp2,k=1)
+table(temp2,weekly_knn)
+```
+
+##(g)
+Create test and train data sets, where training sets are up until 2008 and test sets are all of 2009 and 2010.
+```{r}
+weekly_df <- mutate(Weekly, dir_bin = as.integer(Direction)-1)
+```
+
+```{r}
+weekly_glm <- glm(dir_bin ~ Today + Today:Lag1
+                  ,family=binomial,data=weekly_df)
+summary(weekly_glm)
+```
+
+```{r}
+prediction <- predict(weekly_glm,weekly_df_test,type="response")
+prediction <- ifelse(prediction<=0.5,0,1)
+temp <- table(weekly_df_test$dir_bin,prediction)
+temp
+```
+
+Fraction of percentage correct:
+```{r}
+(sum(diag(temp)))/(sum(temp))*100
+```
+
+This was the most accurate formula for the `glm` that I could find, which makes sense because it includes today's value and a combination of the previous day and today, likely capturing short-term trends.
+
+
+
+
+
+

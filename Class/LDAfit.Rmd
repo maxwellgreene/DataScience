@@ -56,7 +56,33 @@ iris_train <- mutate(iris_train, prediction = predict(iris_lda_fit,type="class")
 ```
 
 
+#KNN for Iris
+```{r}
+library(class)
+iris_test <- sample_n(iris,75)
+iris_train <- sample_n(iris,115)
+```
 
+```{r}
+df_knn <- knn(
+  as.matrix(iris_train[ ,c("Petal.Length","Petal.Width")],ncol=2),
+  as.matrix(iris_test[ ,c("Petal.Length","Petal.Width")],ncol=2),
+  as.matrix(iris_train[,"Species"],ncol=1),k=5)
+table(df_knn,iris_test[,"Species"])
+```
+
+```{r}
+vect_knn <- as.vector(df_knn)
+df_result <- mutate(iris_test,knn = as.vector(df_knn))
+df_result
+```
+
+```{r}
+p1 <- ggplot(df_result) + geom_point(mapping = aes(x = Petal.Length,y = Petal.Width,color = Species))
+p2 <- ggplot(df_result) + geom_point(mapping = aes(x = Petal.Length,y = Petal.Width,color = knn))
+p1
+p2
+```
 
 
 

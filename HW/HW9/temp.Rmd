@@ -1,0 +1,103 @@
+---
+title: "R Data Preparation Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(dataPreparation)
+library(partykit)
+```
+
+```{r}
+adult <- read.csv("https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data",header=FALSE)
+```
+
+```{r}
+names(adult) <- c("age","workClass","fnlwgt","education","education_num","marital_status","occupation","relationship","race","sex","capital_gain","capital_loss","hours_week","native_country","income")
+head(adult)
+```
+
+Make test and taining sets, 80% training, 20% test.
+```{r}
+train_index <- sample(1:nrow(adult),0.8*nrow(adult))
+test_index <- sample(1:nrow(adult),0.2*nrow(adult))
+
+x_train <- dplyr::select(adult[train_index,],-income)
+y_train <- dplyr::select(adult[train_index,],income)
+
+x_test <- dplyr::select(adult[test_index,],-income)
+y_test <- dplyr::select(adult[test_index,],income)
+```
+
+
+#Application: Decision trees
+
+```{r}
+df_train <- cbind(x_train,y_train)
+head(df_train)
+#dplyr::tally(~income,data=df_train,format="percent")
+rpart(income~capital_gain,data=df_train)
+
+split <- 0.55
+df_train <- mutate(df_train, high_cap_gains = capital_gain >= split)
+
+ggplot(df_train,mapping = aes(x=capital_gain,y=income)) + 
+  geom_count(aes(color=high_cap_gains),position=position_jitter(width=0,height=0.1),alpha=.5)+scale_x_log10()
+```
+
+Now we build a decision tree using mroe than a single predictor.
+```{r}
+formula <- as.formula("income ~ age + workClass + marital_status + occupation + relationship + race + sex + capital_gain + capital_loss + hours_week")
+
+mod_tree <- rpart(formula,data=df_train)
+plot(mod_tree)
+text(mod_tree,use.n=TRUE,cex=0.7)
+plot(as.party(mod_tree))
+```
+
+Add result information to the dataset:
+```{r}
+df_train <- df_train %>% 
+  mutate(hus_or_wife = relationship %in% c("husband","wife"), college_degree = hus_or_wife & education %in% c("Bachelors","Doctorate","Masters","Prof-school"),income_dtree=predict(mod_tree,type="class"))
+```
+
+
+```{r}
+cg_splits <- data.frame(hus_or_wife = c(TRUE,FALSE),vals=c(0.8,0.535))
+cg_splits
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
