@@ -3,8 +3,7 @@ title: "Data Science HW10, Max Greene"
 output: html_notebook
 ---
 #Question #1
-
-
+[SEE PDF HERE](https://github.com/maxwellgreene/DataScience/blob/master/HW/HW10/HW10Q1.pdf)
 
 #Question #2
 
