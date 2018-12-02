@@ -28,7 +28,7 @@ predictLM <- function()
 #========== AVERAGE GLM PERFORMANCE ==========
 avgGLM <- function(numTrain,numTest,forNum=100,data1=data)
 {
-  count <- as.numeric(0)
+  count <- c(0,0,0)
   for(i in 1:forNum)
   {
     data_train <- sample_n(data1,numTrain)
@@ -38,12 +38,19 @@ avgGLM <- function(numTrain,numTest,forNum=100,data1=data)
     
     prediction <- predict(data_glm_temp,newdata = data_test,type="response")
     
-    table <- table((prediction/data_test$openNext)>0.90 & 
+    table_10 <- table((prediction/data_test$openNext)>0.9 & 
                      (prediction/data_test$openNext)<1.1)
+    table_05 <- table((prediction/data_test$openNext)>0.95 & 
+                        (prediction/data_test$openNext)<1.05)
+    table_01 <- table((prediction/data_test$openNext)>0.99 & 
+                        (prediction/data_test$openNext)<1.01)
     
-    count <- count + as.numeric(sum(table[1])/(sum(table))*100)
+    count[1] <- count[1] + as.numeric(sum(table_10[1])/(sum(table_10))*100)
+    count[2] <- count[2] + as.numeric(sum(table_05[1])/(sum(table_05))*100)
+    count[3] <- count[3] + as.numeric(sum(table_01[1])/(sum(table_01))*100)
+    
   }
-  return(100-count/forNum)
+  return(count[1]/forNum)
 }
 
 
@@ -63,9 +70,7 @@ avgGLMPlot <- function(numTrainMin,numTrainMax,numTestMin,numTestMax)
     }
   }
   
-  ggplot(as.data.frame(performance), mapping = aes(x = train,y=V2)) 
-  + geom_point()
-  
+  persp3D(z=performance,theta=65)
   return(performance)
   
 }
