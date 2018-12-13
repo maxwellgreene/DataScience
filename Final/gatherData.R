@@ -12,7 +12,7 @@ GetCoinHistory <- function(x)
   data$slug <- NULL
   data$symbol <- NULL
   data$name <- NULL
-  data$ranknow <- NULL
+  data$ranknow <- NULL 
   
   coindata <<- data
   return(data)
