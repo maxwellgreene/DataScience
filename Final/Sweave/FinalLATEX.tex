@@ -62,12 +62,6 @@
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 \maketitle
-\begin{abstract}
-
-%=====================================================
-%=====================================================
-
-\end{abstract}
 
 \section{Introduction}
 \subsection{Background}
@@ -182,32 +176,26 @@ I have written four plotting functions in my `plotData.R` file:
 
 
 
-%\setkeys{Gin}{width=0.6\textwidth} 
+%\setkeys{Gin}{width=0.6\textwidth}
 \begin{figure}[ht]
 \begin{center}
-\subfloat[Open]{
-\includegraphics[width=.4\textwidth]{figure/open-1}}
+\subfloat[Open]{%<-TITLE OF FIG1
+\includegraphics[width=.4\textwidth]{figure/open-1}}%<-NAME OF FIG 1
 \qquad
-\subfloat[Close]{
-\includegraphics[width=.4\textwidth]{figure/close-1}}
+\subfloat[Close]{%<-TITLE OF FIG2
+\includegraphics[width=.4\textwidth]{figure/close-1}}%<-NAME OF FIG 2
 \end{center}
 \end{figure}
 
 \begin{figure}[ht]
 \begin{center}
-\subfloat[High]{
-\includegraphics[width=.4\textwidth]{figure/high-1}}
+\subfloat[High]{%<-TITLE OF FIG3
+\includegraphics[width=.4\textwidth]{figure/high-1}}%<-NAME OF FIG3
 \qquad
-\subfloat[Low]{
-\includegraphics[width=.4\textwidth]{figure/low-1}}
+\subfloat[Low]{%<-TITLE OF FIG4
+\includegraphics[width=.4\textwidth]{figure/low-1}}%<-NAME OF FIG4
 \end{center}
 \end{figure}
-
-
-
-
-
-
 
 \subsection{Moving Forward w/ Model}
 Now that the data has moving averages as well as past and previous values for open and close, it can be implemented in the form of a model. 
@@ -286,6 +274,7 @@ Recreate training and testing datasets.
 \section{Model Evaluation}
 \subsection{Visualizing Accuracy}
 The following graph is a visual representation of the accuracy of the model, showing the percentage of predictions within the given percentage of the correct test data value. This was done using my function `glmVect()` in the file `modelData.R`. Note: The function `glmPlot()` in the same file performs the same computations, but saves a .png file of the plot, rather than returning a vector.
+These functions were a majority of my work, and I believe these graphs are a great way to represent and visualize the accuracy of the model and to better understand the prediction vector output.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -339,15 +328,42 @@ The following is the same plot format as above, except using a compilation of te
   \hlkwd{geom_point}\hlstd{(}\hlkwc{mapping} \hlstd{=} \hlkwd{aes}\hlstd{(}\hlkwc{x}\hlstd{=percents,}\hlkwc{y}\hlstd{=results,}\hlkwc{color}\hlstd{=formula))}
 \end{alltt}
 \end{kframe}
+\includegraphics[width=3in,height=3in]{figure/unnamed-chunk-17-1} 
+
 \end{knitrout}
 \end{center}
 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+  \hlstd{formchar2}    \hlkwb{<-} \hlnum{0}
+  \hlstd{formchar2[}\hlnum{1}\hlstd{]} \hlkwb{<-} \hlstr{"closeNext~open"}
+  \hlstd{formchar2[}\hlnum{2}\hlstd{]} \hlkwb{<-} \hlstr{"closeNext~open*ma1"}
+  \hlstd{formchar2[}\hlnum{3}\hlstd{]} \hlkwb{<-} \hlstr{"closeNext~open*ma1*close"}
+  \hlstd{formchar2[}\hlnum{4}\hlstd{]} \hlkwb{<-} \hlstr{"closeNext~open*ma1*close*volume"}
+
+  \hlstd{resultsdf} \hlkwb{<-} \hlkwd{formulaListGLM}\hlstd{(formchar2)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\begin{center}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{ggplot}\hlstd{(}\hlkwc{data}\hlstd{=resultsdf)} \hlopt{+}
+  \hlkwd{geom_point}\hlstd{(}\hlkwc{mapping} \hlstd{=} \hlkwd{aes}\hlstd{(}\hlkwc{x}\hlstd{=percents,}\hlkwc{y}\hlstd{=results,}\hlkwc{color}\hlstd{=formula))}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=3in,height=3in]{figure/unnamed-chunk-19-1} 
+
+\end{knitrout}
+\end{center}
 
 \section{Conclusion}
-
+In conclusion, simple analysis of historical data by day does not seem sufficient to predict the price of cryptocurrencies. This seems to be attributable to the tendency for manipulation of cryptocurrency, as well as the low volume in some markets that allows a select few "whales" to greatly influecne the market with large orders.\cite{liu2018risks} However, previous work that has been done has used social media reading in significantly more complicated models that had great success in crtpyocurrency price prediction using models similar to those in medical epidemic prediction.\cite{phillips2017predicting}\cite{kim2016predicting}
 
 %=====================================================
-\nocite{*}
 \bibliographystyle{plain}
 \bibliography{BIB}
 

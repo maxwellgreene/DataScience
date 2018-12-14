@@ -1,8 +1,22 @@
 \begin{thebibliography}{1}
 
+\bibitem{kim2016predicting}
+Young~Bin Kim, Jun~Gi Kim, Wook Kim, Jae~Ho Im, Tae~Hyeong Kim, Shin~Jin Kang,
+  and Chang~Hun Kim.
+\newblock Predicting fluctuations in cryptocurrency transactions based on user
+  comments and replies.
+\newblock {\em PloS one}, 11(8):e0161197, 2016.
+
 \bibitem{liu2018risks}
 Yukun Liu and Aleh Tsyvinski.
 \newblock Risks and returns of cryptocurrency.
 \newblock Technical report, National Bureau of Economic Research, 2018.
+
+\bibitem{phillips2017predicting}
+Ross~C Phillips and Denise Gorse.
+\newblock Predicting cryptocurrency price bubbles using social media data and
+  epidemic modelling.
+\newblock In {\em Computational Intelligence (SSCI), 2017 IEEE Symposium Series
+  on}, pages 1--7. IEEE, 2017.
 
 \end{thebibliography}

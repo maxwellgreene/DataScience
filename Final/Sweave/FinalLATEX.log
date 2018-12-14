@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6880 64-bit) (preloaded format=pdflatex 2018.12.5)  14 DEC 2018 02:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6880 64-bit) (preloaded format=pdflatex 2018.12.5)  14 DEC 2018 18:00
 entering extended mode
 **./FinalLATEX.tex
 (FinalLATEX.tex
@@ -342,86 +342,102 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 64.
 ("C:\Users\Max\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Package color Info: Redefining color shadecolor on input line 92.
+Package color Info: Redefining color shadecolor on input line 86.
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 94.
-Package color Info: Redefining color shadecolor on input line 103.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 88.
+Package color Info: Redefining color shadecolor on input line 97.
+Package color Info: Redefining color shadecolor on input line 106.
 
 [1
 
 {C:/Users/Max/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-Package color Info: Redefining color shadecolor on input line 112.
-Package color Info: Redefining color shadecolor on input line 122.
-Package color Info: Redefining color shadecolor on input line 131.
-Package color Info: Redefining color shadecolor on input line 144.
-Package color Info: Redefining color shadecolor on input line 157.
-Package color Info: Redefining color shadecolor on input line 169.
-<figure/open-1.pdf, id=11, 505.89pt x 505.89pt>
+Package color Info: Redefining color shadecolor on input line 116.
+Package color Info: Redefining color shadecolor on input line 125.
+Package color Info: Redefining color shadecolor on input line 138.
+Package color Info: Redefining color shadecolor on input line 151.
+Package color Info: Redefining color shadecolor on input line 163.
+<figure/open-1.pdf, id=10, 505.89pt x 505.89pt>
 File: figure/open-1.pdf Graphic file (type pdf)
 <use figure/open-1.pdf>
-Package pdftex.def Info: figure/open-1.pdf  used on input line 189.
+Package pdftex.def Info: figure/open-1.pdf  used on input line 183.
 (pdftex.def)             Requested size: 181.18439pt x 181.18622pt.
-<figure/close-1.pdf, id=12, 505.89pt x 505.89pt>
+<figure/close-1.pdf, id=11, 505.89pt x 505.89pt>
 File: figure/close-1.pdf Graphic file (type pdf)
 <use figure/close-1.pdf>
-Package pdftex.def Info: figure/close-1.pdf  used on input line 192.
+Package pdftex.def Info: figure/close-1.pdf  used on input line 186.
 (pdftex.def)             Requested size: 181.18439pt x 181.18622pt.
-<figure/high-1.pdf, id=13, 505.89pt x 505.89pt>
+<figure/high-1.pdf, id=12, 505.89pt x 505.89pt>
 File: figure/high-1.pdf Graphic file (type pdf)
 <use figure/high-1.pdf>
-Package pdftex.def Info: figure/high-1.pdf  used on input line 199.
+Package pdftex.def Info: figure/high-1.pdf  used on input line 193.
 (pdftex.def)             Requested size: 181.18439pt x 181.18622pt.
-<figure/low-1.pdf, id=14, 505.89pt x 505.89pt>
+<figure/low-1.pdf, id=13, 505.89pt x 505.89pt>
 File: figure/low-1.pdf Graphic file (type pdf)
 <use figure/low-1.pdf>
-Package pdftex.def Info: figure/low-1.pdf  used on input line 202.
+Package pdftex.def Info: figure/low-1.pdf  used on input line 196.
 (pdftex.def)             Requested size: 181.18439pt x 181.18622pt.
-Package color Info: Redefining color shadecolor on input line 222.
+Package color Info: Redefining color shadecolor on input line 210.
  [2]
-Package color Info: Redefining color shadecolor on input line 244.
+Package color Info: Redefining color shadecolor on input line 232.
 
 [3 <./figure/open-1.pdf> <./figure/close-1.pdf> <./figure/high-1.pdf> <./figure
 /low-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 257.
-Package color Info: Redefining color shadecolor on input line 273.
-<figure/unnamed-chunk-13-1.pdf, id=42, 505.89pt x 505.89pt>
+Package color Info: Redefining color shadecolor on input line 245.
+Package color Info: Redefining color shadecolor on input line 261.
+<figure/unnamed-chunk-13-1.pdf, id=41, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-13-1.pdf Graphic file (type pdf)
 <use figure/unnamed-chunk-13-1.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-13-1.pdf  used on input line 281.
+Package pdftex.def Info: figure/unnamed-chunk-13-1.pdf  used on input line 269.
 
 (pdftex.def)             Requested size: 216.81056pt x 216.81056pt.
+Package color Info: Redefining color shadecolor on input line 280.
 Package color Info: Redefining color shadecolor on input line 291.
-Package color Info: Redefining color shadecolor on input line 302.
  [4 <./figure/unnamed-chunk-13-1.pdf>]
-<figure/unnamed-chunk-15-1.pdf, id=51, 505.89pt x 505.89pt>
+<figure/unnamed-chunk-15-1.pdf, id=50, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-15-1.pdf Graphic file (type pdf)
 <use figure/unnamed-chunk-15-1.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-15-1.pdf  used on input line 308.
+Package pdftex.def Info: figure/unnamed-chunk-15-1.pdf  used on input line 297.
 
 (pdftex.def)             Requested size: 216.81056pt x 216.81056pt.
-Package color Info: Redefining color shadecolor on input line 315.
-Package color Info: Redefining color shadecolor on input line 336.
- (FinalLATEX.bbl) [5 <./figure/unnamed-chunk-15-1.pdf>] (FinalLATEX.aux) ) 
+Package color Info: Redefining color shadecolor on input line 304.
+Package color Info: Redefining color shadecolor on input line 325.
+<figure/unnamed-chunk-17-1.pdf, id=51, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-17-1.pdf Graphic file (type pdf)
+<use figure/unnamed-chunk-17-1.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-17-1.pdf  used on input line 331.
+
+(pdftex.def)             Requested size: 216.81056pt x 216.81056pt.
+ [5 <./figure/unnamed-chunk-15-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 337.
+Package color Info: Redefining color shadecolor on input line 352.
+<figure/unnamed-chunk-19-1.pdf, id=60, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-19-1.pdf Graphic file (type pdf)
+<use figure/unnamed-chunk-19-1.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-19-1.pdf  used on input line 358.
+
+(pdftex.def)             Requested size: 216.81056pt x 216.81056pt.
+ (FinalLATEX.bbl [6 <./figure/unnamed-chunk-17-1.pdf> <./figure/unnamed-chunk-1
+9-1.pdf>]) [7] (FinalLATEX.aux) ) 
 Here is how much of TeX's memory you used:
- 4595 strings out of 492972
- 68851 string characters out of 3127570
- 146388 words of memory out of 3000000
- 8387 multiletter control sequences out of 15000+200000
- 10271 words of font info for 39 fonts, out of 3000000 for 9000
+ 4609 strings out of 492972
+ 69363 string characters out of 3127570
+ 146418 words of memory out of 3000000
+ 8400 multiletter control sequences out of 15000+200000
+ 10010 words of font info for 38 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 44i,10n,49p,616b,414s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/U
-sers/Max/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx1
-2.pfb><C:/Users/Max/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfon
-ts/cm/cmbx9.pfb><C:/Users/Max/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pub
-lic/amsfonts/cm/cmr10.pfb><C:/Users/Max/AppData/Local/Programs/MiKTeX 2.9/fonts
-/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/Max/AppData/Local/Programs/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/Max/AppData/Local/Progr
-ams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/Max/AppData/Lo
-cal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on FinalLATEX.pdf (5 pages, 208475 bytes).
+ 44i,10n,49p,681b,414s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Users/Max/AppData/Local/Programs/MiKTeX 2.
+9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Max/AppData/Local/Program
+s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Max/AppData/Loc
+al/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/Max/A
+ppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/U
+sers/Max/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.
+pfb><C:/Users/Max/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts
+/cm/cmti10.pfb><C:/Users/Max/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publ
+ic/amsfonts/cm/cmtt10.pfb>
+Output written on FinalLATEX.pdf (7 pages, 388272 bytes).
 PDF statistics:
- 82 PDF objects out of 1000 (max. 8388607)
+ 102 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 31 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 41 words of extra memory for PDF output out of 10000 (max. 10000000)
 

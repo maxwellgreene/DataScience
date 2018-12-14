@@ -8,11 +8,16 @@ loadCrypto <- function()
 #========== GET HISTORY ==========
 GetCoinHistory <- function(x)
 {
+  #This function is meant to return slightly neater version 
+  #of the dataset returned from the crypto_history() function
+  #in the 'crypto' package
+  #Input: a character of the desired coin to return
+  #NOTE* specifying coin here is the data used for the whole project
   data <- crypto_history(coin = x);
   data$slug <- NULL
   data$symbol <- NULL
   data$name <- NULL
-  data$ranknow <- NULL 
+  data$ranknow <- NULL
   
   coindata <<- data
   return(data)
@@ -21,6 +26,10 @@ GetCoinHistory <- function(x)
 #========== GET CURRENT ==========
 GetCurrentData <- function(x)
 {
+  #This funciton is actually unused in my project
+  #I decided to omit my section on currect 
+  #price predictions for this project
+  
   temp <- filter(crypto_prices(), symbol == x);
   temp$id <- NULL
   temp$name <- NULL
