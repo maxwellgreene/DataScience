@@ -33,18 +33,3 @@ GetCurrentData <- function(x)
   
   coindatarn <<- temp
 }
-
-
-#========== TEMP STUFF ==========
-
-tempfunc <- function(x)
-{
-  length <- length(x$open)
-  
-  ggplot(data=x, mapping = aes(x = 1:length,y = open)) + geom_line()
-  
-  coinopen1 <- x$open[1:length-1]
-  coinopen2 <- x$open[2:length]
-  
-  avgChange <<- mean(coinopen2-coinopen1)*length
-}
