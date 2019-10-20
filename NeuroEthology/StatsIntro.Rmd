@@ -1,0 +1,77 @@
+---
+title: "StatsIntro"
+author: "Maxwell Greene"
+date: "October 16, 2019"
+output: pdf_document
+---
+
+#Importing data to table from clipboard:
+First, copy the entire dataset to the clipboard, including the header row.
+Then run the following code to assign it to a variable:
+(I've commented this portion out since I will be loading from a file when running it in this notebook.)
+```{r}
+#dataset <- read.table("clipboard",header=TRUE)
+```
+
+I've saved the dataset in a file in the same folder as this notebook, so I can use the read.table command from the file instead of the clipboard.
+```{r}
+dataset <- read.table("dataset1.csv",
+                      header=TRUE,sep=",")
+```
+
+###A note about notation (the "<-" operator, specific to R):
+You can think of the "<-" operator as "=". More accurately, though, we should say the LHS "gets" or "is assigned" the value of the RHS. There are subtle differences between "<-" and "=" (I'll show one below), but "<-" is more flexible and should be used by default.
+```{r}
+sum(x=1,2); exists('x')
+sum((x=1),2); exists('x')
+sum(y<-1,2); exists('y')
+rm(x,y)
+#Notice the equals assignment is only stored when in perenthesis,
+#whereas the y assignment need not be in perenthesis.
+```
+
+#Creating Plots of Difference (Start - End)
+
+Create a bixplot for diff vs. vision:
+```{r,fig.width=6,fig.height=3}
+boxplot(diff~Vis,data=dataset,
+        main="Diff vs. Vision",
+        xlab="Can this person see?",
+        ylab="Difference (start-end)")
+```
+
+Create a scatterplot for diff vs. height:
+```{r,fig.width=6,fig.height=3}
+plot(x=dataset$Height,y=dataset$diff,
+     main="Height vs. Diff",
+     xlab="Height (cm)",
+     ylab="Difference (start-end)")
+```
+
+Create a plot of diff vs. person, an easy way to visualize the distribution of differences among individuals:
+```{r,fig.width=6,fig.height=3}
+plot(x=dataset$Person,y=dataset$diff)
+```
+
+#Create Plots of Walking (Tstart-End)
+Create a bixplot for walking vs. vision:
+```{r,fig.width=6,fig.height=3}
+boxplot(Walking~Vis,data=dataset,
+        main="Walking vs. Vision",
+        xlab="Can this person see?",
+        ylab="Walking (Tstart-end)")
+```
+
+Create a scatterplot for walking vs. height:
+```{r,fig.width=6,fig.height=3}
+plot(x=dataset$Height,y=dataset$Walking,
+     main="Height vs. Walking",
+     xlab="Height (cm)",
+     ylab="Walking (Tstart-end)")
+```
+
+
+
+
+
+

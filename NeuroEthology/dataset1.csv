@@ -1,0 +1,12 @@
+Person,Start,End,Tstart,diff,Error,Gender,Order,Height,Eye,Walking,Vis
+Caroline,262,273,560,-11,11,Female,1,165,-9.5,287,y
+Riva,367,415,650,-48,48,Female,2,172,0,235,n
+Nat,45,630,630,-585,585,Male,3,162.5,0,0,n
+Aubri,310,432,650,-122,122,Female,4,157,0,218,n
+Tara,400,250,400,150,150,Female,5,180.3,0,150,n
+Karla,172,284,430,-112,112,Female,6,160,-2,146,y
+Jalissa,63,36,330,27,27,Female,7,155,0,294,n
+Kayla,128,122,470,6,6,Female,8,170,-3,348,y
+Eva,525,490,660,35,35,Female,9,162.5,-4.25,170,y
+Max,365,383,570,-18,18,Male,10,178,-2,187,y
+Nyssa,535,392,590,57,57,Female,11,150,-5.5,198,y
